@@ -13,14 +13,14 @@ int main() {
     map<string, double> amounts;
 
     // Enter the people to pay
-    cout << "Enter the people to pay (comma separated): ";
-    getline(cin, input);
-    stringstream ss(input);
-    string person;
-    while (getline(ss, person, ',')) {
-        person.erase(remove(person.begin(), person.end(), ' '), person.end());
-        people.push_back(person);
-        amounts[person] = 0.0;
+    cout << "Enter the people to pay (type 'done' when finished):" << endl;
+    while (true) {
+        cout << "Enter name: ";
+        getline(cin, input);
+        if (input == "done") break;
+        input.erase(remove(input.begin(), input.end(), ' '), input.end());
+        people.push_back(input);
+        amounts[input] = 0.0;
     }
 
     // Ask who paid the bill
@@ -32,8 +32,7 @@ int main() {
     vector<pair<string, double>> products;
     cout << "Enter the products and prices on the invoice (format: product price, ...): ";
     getline(cin, input);
-    ss.clear();
-    ss.str(input);
+    stringstream ss(input);
     string product;
     double price;
     while (ss >> product >> price) {
