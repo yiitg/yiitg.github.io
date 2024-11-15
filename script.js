@@ -87,7 +87,7 @@ document.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'x') {
         event.preventDefault();
         addProductInput();
-    } else if (event.ctrlKey && event.key === 'q') {
+    } else if (event.ctrlKey && event.key === 'y') {
         event.preventDefault();
         addPersonInput();
     }
