@@ -11,6 +11,16 @@ function addProductInput() {
     productInputsDiv.appendChild(newProductInput);
 }
 
+function addPersonInput() {
+    const peopleDiv = document.getElementById('people-list');
+    const newPersonInput = document.createElement('div');
+    newPersonInput.className = 'person-input';
+    newPersonInput.innerHTML = `
+        <input type="text" class="person-name">
+    `;
+    peopleDiv.appendChild(newPersonInput);
+}
+
 function processPayment() {
     const productInputs = document.querySelectorAll('.product-input');
     const products = Array.from(productInputs).map(input => {
@@ -19,8 +29,8 @@ function processPayment() {
         return { product: productName, price: productPrice };
     });
 
-    const peopleInput = document.getElementById('people').value;
-    const people = peopleInput.split(',').map(person => person.trim());
+    const personInputs = document.querySelectorAll('.person-input');
+    const people = Array.from(personInputs).map(input => input.querySelector('.person-name').value.trim());
 
     const productPayersDiv = document.getElementById('product-payers');
     productPayersDiv.innerHTML = '';
@@ -48,9 +58,9 @@ function togglePayer(button, person) {
 }
 
 function calculateAmounts() {
-    const peopleInput = document.getElementById('people').value;
+    const personInputs = document.querySelectorAll('.person-input');
     const payer = document.getElementById('payer').value.trim();
-    const people = peopleInput.split(',').map(person => person.trim());
+    const people = Array.from(personInputs).map(input => input.querySelector('.person-name').value.trim());
     const amounts = {};
     people.forEach(person => amounts[person] = 0.0);
 
@@ -72,3 +82,13 @@ function calculateAmounts() {
         }
     }
 }
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'x') {
+        event.preventDefault();
+        addProductInput();
+    } else if (event.ctrlKey && event.key === 'q') {
+        event.preventDefault();
+        addPersonInput();
+    }
+});
