@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027942555197594"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment System</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027942555197594"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h1>Payment System</h1>
-        <div>
-            <label for="people">Enter the people to pay (comma separated):</label>
-            <input type="text" id="people">
+        <div id="people-list">
+            <label>Enter the people to pay:</label>
+            <div class="person-input">
+                <input type="text" class="person-name">
+            </div>
         </div>
+        <button onclick="addPersonInput()">Add Another Person <span style="font-size: small;">(Ctrl+Q)</span></button>
         <div>
             <label for="payer">Who paid the bill:</label>
             <input type="text" id="payer">
@@ -28,7 +31,7 @@
                 <input type="number" class="product-price">
             </div>
         </div>
-        <button onclick="addProductInput()">Add Another Product</button>
+        <button onclick="addProductInput()">Add Another Product <span style="font-size: small;">(Ctrl+X)</span></button>
         <div id="product-payers"></div>
         <div>
             <button onclick="processPayment()">Process Payment</button>
