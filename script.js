@@ -3,6 +3,7 @@ function addProductInput() {
     const newProductInput = document.createElement('div');
     newProductInput.className = 'product-input';
     newProductInput.innerHTML = `
+        <span class="remove-sign" onclick="removeProductInput(this)">-</span>
         <label>Product:</label>
         <input type="text" class="product-name">
         <label>Price:</label>
@@ -11,14 +12,25 @@ function addProductInput() {
     productInputsDiv.appendChild(newProductInput);
 }
 
+function removeProductInput(element) {
+    const productInput = element.parentElement;
+    productInput.remove();
+}
+
 function addPersonInput() {
     const peopleDiv = document.getElementById('people-list');
     const newPersonInput = document.createElement('div');
     newPersonInput.className = 'person-input';
     newPersonInput.innerHTML = `
+        <span class="remove-sign" onclick="removePersonInput(this)">-</span>
         <input type="text" class="person-name">
     `;
     peopleDiv.appendChild(newPersonInput);
+}
+
+function removePersonInput(element) {
+    const personInput = element.parentElement;
+    personInput.remove();
 }
 
 function processPayment() {
@@ -29,8 +41,18 @@ function processPayment() {
         return { product: productName, price: productPrice };
     });
 
+    if (products.length === 0 || products.some(item => item.product === '' || isNaN(item.price) || item.price <= 0)) {
+        alert('Please enter valid product names and prices. Prices must be greater than 0.');
+        return;
+    }
+
     const personInputs = document.querySelectorAll('.person-input');
     const people = Array.from(personInputs).map(input => input.querySelector('.person-name').value.trim());
+
+    if (people.length === 0 || people.some(person => person === '')) {
+        alert('Please enter at least one name in the "Enter the people to pay" section.');
+        return;
+    }
 
     const productPayersDiv = document.getElementById('product-payers');
     productPayersDiv.innerHTML = '';
@@ -61,6 +83,12 @@ function calculateAmounts() {
     const personInputs = document.querySelectorAll('.person-input');
     const payer = document.getElementById('payer').value.trim();
     const people = Array.from(personInputs).map(input => input.querySelector('.person-name').value.trim());
+
+    if (people.length === 0 || people.some(person => person === '')) {
+        alert('Please enter at least one name in the "Enter the people to pay" section.');
+        return;
+    }
+
     const amounts = {};
     people.forEach(person => amounts[person] = 0.0);
 
