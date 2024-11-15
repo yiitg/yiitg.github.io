@@ -97,3 +97,11 @@ button.selected {
     margin-right: 20px;
     flex: 1;
 }
+
+.remove-sign {
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: xx-large;
+    display: inline-block;
+}
