@@ -8,13 +8,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027942555197594"
      crossorigin="anonymous"></script>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            right: 105%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip img {
+            width: 90px; /* 3x the original size */
+            height: 90px; /* 3x the original size */
+            background-color: black; /* Set background color to black */
+        }
+
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .remove-sign {
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: xx-large;
+        }
+
+        .person-input, .product-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <div class="tooltip top-right">
+            <img src="question-mark.png" alt="Help">
+            <span class="tooltiptext">If you can't share your joint account with your friends, calculate it now. Enjoy</span>
+        </div>
         <h1>Payment System</h1>
         <div id="people-list">
             <label>Enter the people to pay:</label>
             <div class="person-input">
+                <span class="remove-sign" onclick="removePersonInput(this)">-</span>
                 <input type="text" class="person-name">
             </div>
         </div>
@@ -25,6 +82,7 @@
         </div>
         <div id="product-inputs">
             <div class="product-input">
+                <span class="remove-sign" onclick="removeProductInput(this)">-</span>
                 <label>Product:</label>
                 <input type="text" class="product-name">
                 <label>Price:</label>
