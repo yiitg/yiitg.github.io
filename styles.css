@@ -1,107 +1,422 @@
+:root {
+    /* Modern color palette */
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #10b981;
+    --secondary-dark: #059669;
+    --danger-color: #ef4444;
+    --background-color: #f9fafb;
+    --card-background: #ffffff;
+    --light-card-background: #f3f4f6;
+    --text-color: #1f2937;
+    --text-secondary: #4b5563;
+    --border-color: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --accent-color: #8b5cf6;
+    --accent-light: #a78bfa;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
+    background-color: var(--background-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100%;
-    overflow: auto;
+    align-items: flex-start;
+    min-height: 100vh;
+    line-height: 1.6;
+    padding: 20px 10px;
 }
 
 .container {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px var(--shadow-color);
     width: 100%;
-    max-width: 600px;
-    height: auto;
-    max-height: none;
-    overflow-y: auto;
+    max-width: 800px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    font-size: 32px;
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 h1 {
-    text-align: center;
-    color: #4CAF50;
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-div {
+h2 {
     margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow-color);
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
-    color: #b0b0b0;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    flex: 1;
+    margin-right: 15px;
+}
+
+.form-group:last-child {
+    margin-right: 0;
 }
 
 input, select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #333;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #2c2c2c;
-    color: #e0e0e0;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--light-card-background);
+    color: var(--text-color);
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+input::placeholder {
+    color: #9ca3af;
+}
+
+/* Additional styling for the select dropdown */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+select:invalid {
+    color: #9ca3af;
+}
+
+select option {
+    color: var(--text-color);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 button {
-    width: calc(50% - 10px);
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    margin-right: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
 }
 
-button:last-child {
-    margin-right: 0;
+.primary-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    flex: 1;
 }
 
-button:hover {
-    background-color: #45a049;
+.primary-button:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+}
+
+.secondary-button {
+    background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
+    color: white;
+}
+
+.secondary-button:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+}
+
+.action-button {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.action-button:hover {
+    background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
 }
 
 button.selected {
-    background-color: red;
+    background: linear-gradient(135deg, var(--danger-color), #dc2626);
     color: white;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.shortcut {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-left: 5px;
+    padding: 2px 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }
 
 #results {
     margin-top: 20px;
-    padding: 10px;
-    background-color: #2c2c2c;
-    border: 1px solid #4CAF50;
-    border-radius: 4px;
+    padding: 20px;
+    background-color: var(--light-card-background);
+    border-left: 4px solid var(--success-color);
+    border-radius: 8px;
 }
 
-.product-input {
+.results-content {
+    margin-bottom: 15px;
+}
+
+.results-content p {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+}
+
+.results-content p:last-child {
+    border-bottom: none;
+}
+
+footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.footer-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .product-input {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .product-input .form-group {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .top-right {
+        position: relative;
+        top: 0;
+        right: 0;
+        align-self: flex-end;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, #results, button {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Additional modern styling */
+.expense-item {
+    background-color: var(--light-card-background);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.product-input label {
-    margin-right: 10px;
+.expense-price {
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.product-input input {
-    margin-right: 20px;
-    flex: 1;
+.payer-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
 }
 
-.remove-sign {
-    color: white;
+.payer-button {
+    background-color: var(--light-card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.payer-button:hover {
+    border-color: var(--primary-color);
+}
+
+.select-all-btn {
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.no-payments {
+    text-align: center;
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+/* Styles for payer selection blocks */
+.payer-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.payer-block {
+    background-color: var(--light-card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 15px;
     cursor: pointer;
-    margin-right: 10px;
-    font-size: xx-large;
-    display: inline-block;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.payer-block:hover {
+    background-color: var(--background-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.payer-block.selected {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.payer-block i {
+    font-size: 16px;
 }

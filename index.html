@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment System</title>
+    <title>PayShare - Expense Splitting System</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027942555197594"
      crossorigin="anonymous"></script>
     <style>
@@ -16,18 +17,22 @@
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 200px;
-            background-color: #555;
-            color: #fff;
+            width: 250px;
+            background-color: #f8fafc;
+            color: #1e293b;
             text-align: center;
-            border-radius: 6px;
-            padding: 5px;
+            border-radius: 10px;
+            padding: 12px;
             position: absolute;
             z-index: 1;
             top: -5px;
             right: 105%;
             opacity: 0;
             transition: opacity 0.3s;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #e2e8f0;
         }
 
         .tooltip:hover .tooltiptext {
@@ -35,67 +40,164 @@
             opacity: 1;
         }
 
-        .tooltip img {
-            width: 90px; /* 3x the original size */
-            height: 90px; /* 3x the original size */
-            background-color: black; /* Set background color to black */
+        .tooltip i {
+            font-size: 24px;
+            color: #6366f1;
+            cursor: help;
+            transition: color 0.3s;
+        }
+        
+        .tooltip i:hover {
+            color: #4f46e5;
         }
 
         .top-right {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
         }
 
         .remove-sign {
-            color: white;
+            color: #ef4444;
             cursor: pointer;
             margin-right: 10px;
-            font-size: xx-large;
+            font-size: 20px;
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .remove-sign:hover {
+            transform: scale(1.2);
+            color: #dc2626;
         }
 
         .person-input, .product-input {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            background-color: #f3f4f6;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .person-input:hover, .product-input:hover {
+            background-color: #f9fafb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading i {
+            color: #6366f1;
+            font-size: 24px;
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="tooltip top-right">
-            <img src="question-mark.png" alt="Help">
-            <span class="tooltiptext">If you can't share your joint account with your friends, calculate it now. Enjoy</span>
+        <header>
+            <div class="logo">
+                <i class="fas fa-money-bill-wave"></i>
+                <h1>PayShare</h1>
+            </div>
+            <div class="tooltip top-right">
+                <i class="fas fa-question-circle"></i>
+                <span class="tooltiptext">Split expenses with friends easily! Add people, enter who paid, create products with prices, and see exactly how much each person owes the payer.</span>
+            </div>
+        </header>
+        
+        <div class="card">
+            <h2><i class="fas fa-users"></i> Participants</h2>
+            <div id="people-list">
+                <label>Enter participants:</label>
+                <div class="person-input">
+                    <i class="remove-sign fas fa-minus-circle" onclick="removePersonInput(this)"></i>
+                    <input type="text" class="person-name" placeholder="Name" required>
+                </div>
+            </div>
+            <button class="action-button" onclick="addPersonInput()">
+                <i class="fas fa-user-plus"></i> Add Person <span class="shortcut">Ctrl+Y</span>
+            </button>
         </div>
-        <h1>Payment System</h1>
-        <div id="people-list">
-            <label>Enter the people to pay:</label>
-            <div class="person-input">
-                <span class="remove-sign" onclick="removePersonInput(this)">-</span>
-                <input type="text" class="person-name">
+        
+        <div class="card">
+            <h2><i class="fas fa-credit-card"></i> Payer Information</h2>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Who paid the bill:</label>
+                <div id="payer-blocks" class="payer-blocks"></div>
+                <input type="hidden" id="payer" value="">
             </div>
         </div>
-        <button onclick="addPersonInput()">Add Another Person <span style="font-size: small;">(Ctrl+Y)</span></button>
-        <div>
-            <label for="payer">Who paid the bill:</label>
-            <input type="text" id="payer">
-        </div>
-        <div id="product-inputs">
-            <div class="product-input">
-                <span class="remove-sign" onclick="removeProductInput(this)">-</span>
-                <label>Product:</label>
-                <input type="text" class="product-name">
-                <label>Price:</label>
-                <input type="number" class="product-price">
+        
+        <div class="card">
+            <h2><i class="fas fa-shopping-cart"></i> Expenses</h2>
+            <div id="product-inputs">
+                <div class="product-input">
+                    <i class="remove-sign fas fa-minus-circle" onclick="removeProductInput(this)"></i>
+                    <div class="form-group">
+                        <label>Product:</label>
+                        <input type="text" class="product-name" placeholder="Item name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price:</label>
+                        <input type="number" class="product-price" placeholder="0.00" step="0.01" min="0" required>
+                    </div>
+                </div>
             </div>
+            <button class="action-button" onclick="addProductInput()">
+                <i class="fas fa-cart-plus"></i> Add Product <span class="shortcut">Ctrl+X</span>
+            </button>
         </div>
-        <button onclick="addProductInput()">Add Another Product <span style="font-size: small;">(Ctrl+X)</span></button>
-        <div id="product-payers"></div>
-        <div>
-            <button onclick="processPayment()">Process Payment</button>
-            <button onclick="calculateAmounts()">Calculate Amounts</button>
+        
+        <div id="product-payers" class="card hidden">
+            <h2><i class="fas fa-hand-holding-usd"></i> Who Pays What?</h2>
+            <!-- Content will be dynamically added here -->
         </div>
-        <div id="results"></div>
+        
+        <div class="button-group">
+            <button class="primary-button" onclick="processPayment()">
+                <i class="fas fa-list-check"></i> Select Payers
+            </button>
+            <button class="primary-button" onclick="calculateAmounts()">
+                <i class="fas fa-calculator"></i> Calculate Shares
+            </button>
+            <button class="secondary-button" onclick="resetForm()">
+                <i class="fas fa-refresh"></i> Reset
+            </button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Calculating...</p>
+        </div>
+        
+        <div id="results" class="hidden">
+            <h2><i class="fas fa-receipt"></i> Payment Summary</h2>
+            <div class="results-content"></div>
+            <button class="action-button" onclick="saveResults()">
+                <i class="fas fa-save"></i> Save Results
+            </button>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 PayShare - Expense Splitting System</p>
+            <div class="footer-links">
+                <a href="#" onclick="showPrivacyPolicy()">Privacy Policy</a>
+                <a href="#" onclick="showHelp()">Help</a>
+                <a href="https://github.com/yourusername/paymentSystem" target="_blank">GitHub</a>
+            </div>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
