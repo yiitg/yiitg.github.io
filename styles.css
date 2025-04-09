@@ -238,25 +238,77 @@ button.selected {
 
 #results {
     margin-top: 20px;
-    padding: 20px;
     background-color: var(--light-card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    overflow: hidden;
     border-left: 4px solid var(--success-color);
-    border-radius: 8px;
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-background);
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.summary-header h2 {
+    margin-bottom: 0;
+}
+
+.summary-save-btn {
+    margin: 0;
+    background: linear-gradient(135deg, var(--success-color), var(--secondary-color));
+}
+
+.summary-save-btn:hover {
+    background: linear-gradient(135deg, var(--secondary-color), var(--success-color));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
 }
 
 .results-content {
-    margin-bottom: 15px;
+    padding: 15px 20px;
 }
 
 .results-content p {
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background-color: var(--card-background);
+    border-radius: 8px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: transform 0.2s;
+}
+
+.results-content p span:first-child {
+    min-width: 120px;
+}
+
+.results-content p span:last-child {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.results-content p:hover {
+    transform: translateY(-2px);
 }
 
 .results-content p:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.no-payments {
+    text-align: center;
+    color: var(--success-color);
+    font-weight: 500;
+    padding: 15px !important;
+    background-color: var(--card-background) !important;
 }
 
 footer {
